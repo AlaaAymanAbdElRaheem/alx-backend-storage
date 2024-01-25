@@ -13,6 +13,6 @@ def get_page(url: str) -> str:
     with an expiration time of 10 seconds"""
     link = requests.get(url)
     connection = redis.Redis()
-    connection.setex("count:{}".format(url), 10, link.text)
     connection.incr("count:{}".format(url))
+    connection.setex("count:{}".format(url), 10, link.text)
     return link.text
