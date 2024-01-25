@@ -9,12 +9,14 @@ from typing import Callable
 from functools import wraps
 
 
+connection = redis.Redis()
+
+
 def count(method: Callable) -> Callable:
     """ counts how many times methods of the Cache class are called"""
     @wraps(method)
     def wrapper(url):
         """ Wrapper function """
-        connection = redis.Redis()
         connection.incr(f"count:{url}")
         result = method(url)
         connection.setex(f"result:{url}", 10, result)
