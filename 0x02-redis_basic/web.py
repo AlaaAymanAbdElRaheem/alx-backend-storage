@@ -14,5 +14,5 @@ def get_page(url: str) -> str:
     link = requests.get(url)
     connection = redis.Redis()
     connection.incr("count:{}".format(url))
-    connection.setex("count:{}".format(url), 10, link.text)
+    connection.setex("result:{}".format(url), 10, link.text)
     return link.text
