@@ -20,3 +20,23 @@ class Cache:
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Optional[Callable] = None) -> Union[
+                                                                    str,
+                                                                    bytes,
+                                                                    int,
+                                                                    float]:
+        """ Method that takes a key string argument
+        and an optional Callable argument """
+        data = self._redis.get(key)
+        if fn:
+            data = fn(data)
+        return data
+
+    def get_str(self, key: str) -> str:
+        """ Method that takes a key string argument and returns a string """
+        return self.get(key, str)
+
+    def get_int(self, key: str) -> int:
+        """ Method that takes a key string argument and returns an int """
+        return self.get(key, int)
