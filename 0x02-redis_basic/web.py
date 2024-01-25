@@ -15,9 +15,9 @@ def count(method: Callable) -> Callable:
     def wrapper(url):
         """ Wrapper function """
         connection = redis.Redis()
-        connection.incr("count:{}".format(url))
+        connection.incr(f"count:{url}")
         result = method(url)
-        connection.setex("result:{}".format(url), 10, result)
+        connection.setex(f"result:{url}", 10, result)
 
 
 def get_page(url: str) -> str:
