@@ -24,6 +24,7 @@ def count(method: Callable) -> Callable:
     return wrapper
 
 
+@count
 def get_page(url: str) -> str:
     """ returns the HTML content of the URL """
     return requests.get(url).text
